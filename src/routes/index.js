@@ -1,13 +1,21 @@
 "use strict";
+const boom = require("boom");
 
 module.exports.register = async server => {
-    server.route( {
+    server.route({
         method: "GET",
         path: "/",
-        handler: () => {
-            // a handler can return text, HTML, JSON,
-            // a file, or just about anything
-            return "My first hapi server!";
+        handler: (request, h) => {
+            try {
+                const message = request.auth.isAuthenticated ? `Hello, ${ request.auth.credentials.profile.firstName }!` : "My first hapi server!";
+                return h.view("index", {
+                    title: "Home",
+                    message,
+                    isAuthenticated: request.auth.isAuthenticated
+                })
+            } catch (err) {
+                server.log(["error", "home"], err)
+            }
         }
-    } );
+    });
 };
