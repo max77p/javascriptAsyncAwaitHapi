@@ -1,18 +1,13 @@
 "use strict";
-const Hapi=require("hapi");
-const port=8080;
-const server=Hapi.server({port});
+const app=require("./app");
 
-server.route({
-    method:"GET",
-    path:"/",
-    handler:()=>{
-        return "My first hapi server!";
-    }
-});
+const port=8080;
+const config={port};
+
 
 const start=async()=>{
     try{
+        const server=await app.createServer(config);
         await server.start();
         console.log(`Server running at http://localhost:${port}`);
     }catch (err){
