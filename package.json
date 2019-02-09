@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "blipp": "^3.1.2",
+    "dotenv": "^6.2.0",
     "hapi": "^18.1.0",
     "hapi-pino": "^5.4.1"
   }
